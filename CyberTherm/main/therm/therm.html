@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Therm</title>
+  <link rel="stylesheet" href="therm.css">
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="termometer">
+        <div id="temperature" style="height:0" data-value="0"></div>
+        <div id="graduations"></div>
+    </div>
+
+    <div id="playground">
+        <div id="range">
+            <input id="minTemp" type="text" value="low">
+            <input type="range" min="0" max="100" value="42">
+            <input id="maxTemp" type="text" value="high">
+        </div>
+        <p id="unit">Threat level</p>
+    </div>
+
+    <p id="info">Click on the values to change them!</p>
+</div>
+
+<script src="therm.js"></script>
+</body>
+</html>

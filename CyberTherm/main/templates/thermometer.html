@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cyber Threat Thermometer App</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .thermometer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 100px;
+        }
+
+        .thermometer {
+            width: 100px;
+            height: 300px;
+            position: relative;
+            background-color: #eaeaea;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .thermometer-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            transition: height 0.5s ease-in-out;
+        }
+
+        .table-container {
+            margin-top: 50px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eaeaea;
+        }
+    </style>
+</head>
+<body>
+<div class="thermometer-container">
+    <div class="thermometer">
+        <div class="thermometer-fill" id="thermometer-fill"></div>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Threat Level</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Category 1</td>
+                <td id="category1-level">0</td>
+            </tr>
+            <tr>
+                <td>Category 2</td>
+                <td id="category2-level">0</td>
+            </tr>
+            <tr>
+                <td>Category 3</td>
+                <td id="category3-level">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function updateThermometerFill(fillLevel) {
+        const fillElement = document.getElementById('thermometer-fill');
+        fillElement.style.transition = 'none';
+        fillElement.style.height = fillLevel + '%';
+        setTimeout(() => {
+            fillElement.style.transition = 'height 0.5s ease-in-out';
+            fillElement.style.height = fillLevel + '%';
+        }, 50);
+    }
+
+    function updateTableValues(data) {
+        Object.keys(data).forEach((category) => {
+            document.getElementById(`${category}-level`).textContent = data[category];
+        });
+    }
+
+    function fetchData() {
+        fetch('/mock-data')
+            .then((response) => response.json())
+            .then((data) => {
+                updateThermometerFill(data['category1']);
+                updateTableValues(data);
+            })
+            .catch((error) => {
+                console.log('Error fetching data:', error);
+            });
+    }
+
+    setInterval(fetchData, 3000);
+    fetchData();
+</script>
+</body>
+</html>
+
+
